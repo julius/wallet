@@ -15,7 +15,7 @@ var UI = (function(UI, $, undefined) {
 
       $stack.addClass("loading");
 
-      var address, amount, tag;
+      var address, amount, tag, message;
 
       try {
         address = $.trim($("#transfer-address").val());
@@ -60,6 +60,13 @@ var UI = (function(UI, $, undefined) {
             throw UI.t("tag_is_invalid");
           }
         }
+        if ($("#transfer-message-container").is(":visible")) {
+          message = $.trim($("#transfer-message").val().toUpperCase());
+
+          if (message && (/[^A-Z9]/.test(message) || message.length > 2187)) {
+            throw UI.t("message_is_invalid");
+          }
+        }
       } catch (error) {
         $stack.removeClass("loading");
         UI.formError("transfer", error);
@@ -89,7 +96,7 @@ var UI = (function(UI, $, undefined) {
           return;
         }
         
-        var transfers = [{"address": address, "value": amount, "message": "", "tag": tag}];
+        var transfers = [{"address": address, "value": amount, "message": message, "tag": tag}];
         var outputsToCheck = transfers.map(transfer => { return {address: iota.utils.noChecksum(transfer.address)}});
         var exptectedOutputsLength = outputsToCheck.length;
         filterSpentAddresses(outputsToCheck).then(filtered => {
