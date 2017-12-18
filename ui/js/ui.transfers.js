@@ -35,15 +35,23 @@ var UI = (function(UI, $, undefined) {
         var rawAmount = $.trim($("#transfer-amount").val());
         var rawUnits  = $("#transfer-units-value").html();
 
-        if (!rawAmount) {
-          throw UI.t("amount_cannot_be_zero");
-        } else {
-          amount = iota.utils.convertUnits(parseFloat(rawAmount), rawUnits, "i");
+        /**
+         * JuliusEckert: Allow 0i transactions
+         */
 
-          if (!amount) {
-            throw UI.t("amount_cannot_be_zero");
-          }
+        // if (!rawAmount) {
+        //   throw UI.t("amount_cannot_be_zero");
+        // } else {
+        //   amount = iota.utils.convertUnits(parseFloat(rawAmount), rawUnits, "i");
+
+        //   if (!amount) {
+        //     throw UI.t("amount_cannot_be_zero");
+        //   }
+        // }
+        if (!rawAmount) {
+          rawAmount = 0;
         }
+        amount = iota.utils.convertUnits(parseFloat(rawAmount), rawUnits, "i");
 
         if ($("#transfer-tag-container").is(":visible")) {
           tag = $.trim($("#transfer-tag").val().toUpperCase());
