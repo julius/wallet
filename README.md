@@ -1,3 +1,14 @@
+# IOTA Wallet Fork
+
+Fork of normal IOTA Wallet with 2 additional features:
+- Send transaction with a message attached
+- Allows 0i transactions
+
+### Demo with www.iota-messages.com
+![screencast](screencast-wallet.gif)
+
+[www.iota-messages.com](http://www.iota-messages.com) helps you send transactions with messages. And view messages in existing transactions.
+
 # IOTA App
 
 ## Prerequisites
